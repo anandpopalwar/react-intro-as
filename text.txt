@@ -1,0 +1,15 @@
+first we take normal html skeleton and insert react cdn links in .html file from react website
+
+after that write react code of 
+const heading = React.createElement('h1',{id:'heading'},'innerHTML of created element')
+first we need to use React keyword then attach createElement() that function take 3 argument and 1st is element to be created
+2nd is an object in which we write what are the attribute of created element 
+3rd is the context or innerHTML of that tag
+
+then
+const root = ReactDOM.createRoot(document.getElementById('root'))
+in this ReactDOM create a parent Root by taking the id of parant root 
+
+then
+root.render('heading')
+in this root viz parant div render heading element inside it.
