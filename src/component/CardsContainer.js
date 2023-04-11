@@ -1,22 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cards from "./Cards";
-import arr from "./utils/utils";
-import MainObj from "./utils/utils";
+// import arr from "./utils/utils";
+import { RestaurantsData } from "./utils/utils";
+import { Link } from "react-router-dom";
+import useOnline from './utils/useOnline'
 
-// function filterFunc(){(filterData , arr)=>{
-//     console.log(filterData , arr)
-//     return arr
 
-// }}
+
+function FilterFnc(textSearch, arr) {
+    console.log(textSearch, arr)
+    const resultArr = arr.filter((card) => {
+
+        card?.foodName?.includes(textSearch)
+
+    })
+    return resultArr;
+
+}
 
 const CardsContainer = () => {
-    
- 
 
-    const [arr, setArr] = useState(MainObj)
-
+    const [arr, setArr] = useState(RestaurantsData)
     const [textSearch, setTextSearch] = useState()
 
+    // useEffect(() => {
+    //     getRestrounts()
+    // }, [])
+
+    // async function getRestrounts(){
+    //     const res =   await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.087591&lng=73.0059052&page_type=DESKTOP_WEB_LISTING')  
+    //     const data =  await res.json()
+    //     console.log(data)
+    //     setArr(data?.data?.cards[2]?.data?.data?.cards)
+    // }
+
+    // const online = useOnline()
+    // if(!online) {
+    //     return <div className="onlineStatus">
+    //     <h2> 🥵ohh...offline</h2>
+    //     <p>looks like you are offline check your connection and then comeback...</p>
+    //     </div>
+    // }
+
+
+    const onlineStatus = useOnline()
+    if (onlineStatus === false) {
+        return <div className="onlineStatus">
+            <h2> 🥵ohh...offline</h2>
+            <p>looks like you are offline check your connection and then comeback...</p>
+        </div>
+    }
 
 
     return (
@@ -24,59 +57,65 @@ const CardsContainer = () => {
             {/* <h3> from restaurant royal cusine</h3> */}
             <div className='searchBox'>
                 <h3>Search food , restaurant , dishes...</h3>
-                <input type={"text"} placeholder={"enter text here"}   value={textSearch} onChange={(e) => {
-                    // const filterData = e.target.value ;
-                     setTextSearch(e.target.value);
-                    return }} 
-            
-              />
-                <button 
-                //  onClick={()=>{
-                //     const result = filterFunc(textSearch , arr)
-                //     setArr(result)
-                // }} 
-                >search🔎</button>
+                <div className="searchBoxFooter">
+
+                    <input type={"text"} placeholder={"enter text here"} value={textSearch} onChange={(e) => {
+                        return setTextSearch(e.target.value);
+                    }}
+
+                    />
+                    <button
+                        onClick={() => {
+
+                            const result = FilterFnc(textSearch, arr)
+
+                            console.log(result)
+                            setArr(result);
+                        }}
+                    >🔎FIND</button>
+                </div>
             </div>
 
-            <h3>from your search '{textSearch}' </h3>
+            {/* <h3>from your search '{textSearch}' </h3> */}
             <div className=" btnContainer">
                 <button className='filteredBtn' onClick={() => {
-                    filterList = MainObj.filter(dish => dish.avgrating > 4)
+                    console.log('rating based filter is called')
+                    filterList = RestaurantsData.filter(Restourant => Restourant.rating > 4)
+
                     setArr(filterList)
                     return
                 }}>
                     top rated⭐
                 </button >
                 <button className='filteredBtn' onClick={() => {
-                    filterList = MainObj.filter(dish => dish.veg == false)
+                    filterList = RestaurantsData.filter(Restourant => Restourant.distance < 2)
                     setArr(filterList)
-                    console.log('non veg')
+                    console.log('filtered the near you list')
                     return
                 }}>
-                    non-veg🍗
+                    near you🛵
                 </button>
-                <button className='filteredBtn' onClick={() => {
-                    filterList = MainObj.filter(dish => dish.sweets == true)
+                {/* <button className='filteredBtn' onClick={() => {
+                    filterList = arr.filter(Restourant => Restourant.sweets == true)
                     setArr(filterList)
                     console.log('del time')
                     return
                 }}>
                     sweets😋
-                </button>
+                </button> */}
             </div>
             <div className='CardsContainer'>
+
+                {/* mapping the restounrant component with the length of array  */}
                 {
-                    arr.map((Items) => {
+                    arr.map((Restourant) => {
+
                         return (
-                            <Cards
-                                foodName={Items.dishname}
-                                prize={Items.prize}
-                                resName={Items.restaurantName}
-                                foodImg={Items.imgURL}
-                                cusine={Items.foodDisc}
-                                key={Items.id}
-                                rating={Items.avgrating}
-                                cardItems={Items} veg={Items.veg} />
+
+                            <Link key={Restourant.id} name={Restourant.name}  >
+                                {/* passing the props as resourant array to cards component */}
+                                <Cards {...Restourant} />
+                            </Link>
                         )
                     })
                 }
