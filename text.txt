@@ -13,3 +13,4 @@ in this ReactDOM create a parent Root by taking the id of parant root
 then
 root.render('heading')
 in this root viz parant div render heading element inside it.
+

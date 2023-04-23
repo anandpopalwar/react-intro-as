@@ -55,16 +55,21 @@ const CardsContainer = () => {
     return (
         <div className='parentCardContainer'>
             {/* <h3> from restaurant royal cusine</h3> */}
-            <div className='searchBox'>
-                <h3>Search food , restaurant , dishes...</h3>
-                <div className="searchBoxFooter">
+            <div className='searchBox  md:w-4/5 mx-auto md:my-5 text-center  justify-center px-10  bg-white-500  py-4 md:rounded-xl  bg-green-300'>
+                <h3 className=" text-xl font-semibold justify-items-center text-left">Search food , restaurant , dishes...</h3>
+                <div className="searchBoxFooter flex   gap-3  h-10 justify-items-center" >
 
-                    <input type={"text"} placeholder={"enter text here"} value={textSearch} onChange={(e) => {
-                        return setTextSearch(e.target.value);
-                    }}
+                    <input
+                        type={"text"}
+                        placeholder={"enter text here"}
+                        value={textSearch}
+                        className=" px-4 py-2 w-2/4  rounded-3xl align-middle justify-items-center  bg-black text-white"
+                        onChange={(e) => {
+                            return setTextSearch(e.target.value);
+                        }}
 
                     />
-                    <button
+                    <button className=" bg-black text-white rounded-3xl px-4 py-2 text-sm inline-block "
                         onClick={() => {
 
                             const result = FilterFnc(textSearch, arr)
@@ -72,13 +77,16 @@ const CardsContainer = () => {
                             console.log(result)
                             setArr(result);
                         }}
-                    >🔎FIND</button>
+                    ><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                            <path fillRule="evenodd" d="M9 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM2 9a7 7 0 1112.452 4.391l3.328 3.329a.75.75 0 11-1.06 1.06l-3.329-3.328A7 7 0 012 9z" clipRule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
             {/* <h3>from your search '{textSearch}' </h3> */}
-            <div className=" btnContainer">
-                <button className='filteredBtn' onClick={() => {
+            <div className=" btnContainer md:w-4/5 m-auto gap-4 flex  bg-red-500 p-3 md:rounded-full ">
+                <button className='filteredBtn bg-black text-neutral-100  rounded-full px-4 py-1 text-sm ' onClick={() => {
                     console.log('rating based filter is called')
                     filterList = RestaurantsData.filter(Restourant => Restourant.rating > 4)
 
@@ -87,7 +95,7 @@ const CardsContainer = () => {
                 }}>
                     top rated⭐
                 </button >
-                <button className='filteredBtn' onClick={() => {
+                <button className='filteredBtn bg-black text-neutral-100  rounded-full px-4 py-1 text-sm' onClick={() => {
                     filterList = RestaurantsData.filter(Restourant => Restourant.distance < 2)
                     setArr(filterList)
                     console.log('filtered the near you list')
@@ -104,17 +112,18 @@ const CardsContainer = () => {
                     sweets😋
                 </button> */}
             </div>
-            <div className='CardsContainer'>
+            <div className='CardsContainer  grid gap-2 md:gap-6  container p-2    grid-cols-2 md:grid-cols-2   lg:grid-cols-3 mx-auto md:my-4 md:p-4 md:w-4/5 md:rounded-2xl  bg-red-200  ' >
 
                 {/* mapping the restounrant component with the length of array  */}
-                {
+                { 
                     arr.map((Restourant) => {
 
                         return (
+                            // to={'/restro'} 
 
-                            <Link key={Restourant.id} name={Restourant.name}  >
+                            <Link key={Restourant.id} name={Restourant.name} data={{ ...Restourant }}>
                                 {/* passing the props as resourant array to cards component */}
-                                <Cards {...Restourant} />
+                                <Cards {...Restourant} key={Restourant.id} />
                             </Link>
                         )
                     })

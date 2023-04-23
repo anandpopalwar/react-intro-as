@@ -1,10 +1,10 @@
 // Render Prop
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik'; 
 
 const Basic = () => (
-  <div className='formik'>
-    <h2>login form </h2>
+  <div className='formik container  w-2/3 mx-auto p-8  rounded-2xl bg-yellow-400'>
+    <h2 className='font-bold text-3xl text-center'>login form </h2>
     <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -27,14 +27,14 @@ const Basic = () => (
     >
       {({ isSubmitting }) => (
         <Form>
-          <h4>email : </h4>
-          <Field type="email" name="email" />
+          <h4>email </h4>
+          <Field type="email" name="email" className='rounded-full w-full h-8  p-4 outline-none  '/>
 
-          <ErrorMessage name="email" component="div"  className='input'/>
-          <h4>password : </h4>
-          <Field type="password" name="password"/>
+          <ErrorMessage name="email" component="div"  className='input text-center'/>
+          <h4>password </h4>
+          <Field type="password" name="password"  className='rounded-full  w-full h-8  p-4 outline-none  '/>
           <ErrorMessage name="password" component="div"  className='input' />
-          <button type="submit" disabled={isSubmitting} >
+          <button type="submit" disabled={isSubmitting}  className='rounded-full    px-10 py-2 my-4 outline-none  bg-black text-yellow-400'>
             Submit
           </button>
         </Form>

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useContext, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
 //importing components from other component files
@@ -9,25 +9,55 @@ import NotFoundb from './component/Error'
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 // import Contact from './component/Contact'
 import RestourantData from './component/RestourantData'
+import Parent from './component/accordian'
+import UserProfilePage from './component/UserProfilePage'
+//context data is provided
+import UserContext from './component/utils/UserContext'
+//importing provider fro redux to use store
+import { Provider } from 'react-redux'
+//imporrting store to use with provider
+import Store from './component/utils/store'
+
 // import Login from './component/Login'
 // import Logout from './component/Logout'
 
 
-const Login = lazy(() => import('./component/Login') );
-const Contact = lazy(() => import('./component/Contact') );
-const About = lazy(() => import('./component/About') );
+//importing component with lazy() for code spillting and lazy loading {lazy} will be imported from react
+// importing file function syntax 
+//       const component_name = lazy(()=> import ('component/path')) 
+//it makes our react app faster and with that we have to use <Suspense></Suspense> componet and import that form react {Suspense}
+//eg.    <Suspense>
+//            <component /> which is imported with lazy () 
+//       </Suspense>
+
+
+
+const Login = lazy(() => import('./component/Login'));
+const Contact = lazy(() => import('./component/Contact'));
+const About = lazy(() => import('./component/About'));
+const UserProfilePage = lazy(() => import('./component/UserProfilePage'))
+const Cart = lazy(() => import('./component/Cart'))
 
 
 const MainApp = () => {
+    const [user, setUser] = useState(UserContext)
     return (
-        <div>
-            <NavBar />
-            <Outlet />
+        <Provider store={Store} >
+            <UserContext.Provider value={
+                {
+                    user: user,
+                    setUser: setUser
+                }
+            } >
 
-        </div>
+                <NavBar />
+                <Outlet />
+
+            </UserContext.Provider>
+
+        </Provider>
     )
 }
-
 
 
 const appLayout = createBrowserRouter([
@@ -42,17 +72,17 @@ const appLayout = createBrowserRouter([
             },
             {
                 path: '/about',
-                element: 
-                <Suspense >
-                    <About />
-                </Suspense>
+                element:
+                    <Suspense >
+                        <About />
+                    </Suspense>
             },
             {
                 path: '/contact',
                 element:
-                <Suspense >
-                    <Contact />
-                </Suspense> 
+                    <Suspense >
+                        <Contact />
+                    </Suspense>
             },
             {
                 path: '/restro',
@@ -65,10 +95,18 @@ const appLayout = createBrowserRouter([
                         <Login />
                     </Suspense>
             },
-            // {
-            //     path:'/logout',
-            //     element:<Logout />
-            // },
+            {
+                path: '/acc',
+                element: <Parent />
+            },
+            {
+                path: '/profile',
+                element: <UserProfilePage />
+            },
+            {
+                path: '/cart',
+                element: <Cart/>
+            }
         ]
     },
 
