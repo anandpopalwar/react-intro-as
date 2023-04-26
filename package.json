@@ -4,8 +4,6 @@
   "description": "this is react app created by anand with the help of akshay saini",
   "main": "app.js",
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html",
     "test": "jest"
   },
   "repository": {

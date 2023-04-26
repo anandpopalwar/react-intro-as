@@ -105,7 +105,10 @@ const appLayout = createBrowserRouter([
             },
             {
                 path: '/cart',
-                element: <Cart/>
+                element: <Suspense>
+
+                    <Cart/>
+                </Suspense>
             }
         ]
     },

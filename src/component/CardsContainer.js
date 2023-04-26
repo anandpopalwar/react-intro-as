@@ -85,8 +85,17 @@ const CardsContainer = () => {
             </div>
 
             {/* <h3>from your search '{textSearch}' </h3> */}
-            <div className=" btnContainer md:w-4/5 m-auto gap-4 flex  bg-red-500 p-3 md:rounded-full ">
-                <button className='filteredBtn bg-black text-neutral-100  rounded-full px-4 py-1 text-sm ' onClick={() => {
+            <div className=" btnContainer md:w-4/5 m-auto gap-4 flex  bg-neutral-200 p-3 md:rounded-full ">
+                <button className='filteredBtn  bg-white rounded-full px-4 py-1 text-sm ' onClick={() => {
+                    console.log('rating based filter is called')
+                    filterList = RestaurantsData.map(Restourant => Restourant)
+
+                    setArr(filterList)
+                    return
+                }}>
+                    All
+                </button >
+                <button className='filteredBtn  bg-white  rounded-full px-4 py-1 text-sm ' onClick={() => {
                     console.log('rating based filter is called')
                     filterList = RestaurantsData.filter(Restourant => Restourant.rating > 4)
 
@@ -95,7 +104,7 @@ const CardsContainer = () => {
                 }}>
                     top rated⭐
                 </button >
-                <button className='filteredBtn bg-black text-neutral-100  rounded-full px-4 py-1 text-sm' onClick={() => {
+                <button className='filteredBtn bg-white  rounded-full px-4 py-1 text-sm' onClick={() => {
                     filterList = RestaurantsData.filter(Restourant => Restourant.distance < 2)
                     setArr(filterList)
                     console.log('filtered the near you list')
@@ -115,7 +124,7 @@ const CardsContainer = () => {
             <div className='CardsContainer  grid gap-2 md:gap-6  container p-2    grid-cols-2 md:grid-cols-2   lg:grid-cols-3 mx-auto md:my-4 md:p-4 md:w-4/5 md:rounded-2xl  bg-red-200  ' >
 
                 {/* mapping the restounrant component with the length of array  */}
-                { 
+                {
                     arr.map((Restourant) => {
 
                         return (
